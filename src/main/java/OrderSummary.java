@@ -4,8 +4,28 @@ import java.awt.*;
 
 public class OrderSummary extends JPanel {
     public OrderSummary(OnlineFoodDeliverySystem app) {
-        setLayout(new GridLayout(6,1,5,5));
-        setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+        setLayout(new BorderLayout(10,10));
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        JPanel authPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        JLabel userLabel = new JLabel("Welcome, " + UserAccount.name);
+        userLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        authPanel.add(userLabel);
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(_ -> {
+            UserAccount.loggedIn = false;
+            JOptionPane.showMessageDialog(app, "Logged out successfully.");
+            app.refreshPage("Step1");
+        });
+        authPanel.add(logoutButton);
+
+        topPanel.add(authPanel, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
+
+        JPanel summaryPanel = new JPanel(new GridLayout(6,1,5,5));
+        summaryPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
                 "Order Summary", TitledBorder.CENTER, TitledBorder.TOP));
 
         app.nameLabel = new JLabel();
@@ -14,11 +34,11 @@ public class OrderSummary extends JPanel {
         app.orderLabel = new JLabel();
         app.statusLabel = new JLabel();
 
-        add(app.nameLabel);
-        add(app.addressLabel);
-        add(app.restaurantLabel);
-        add(app.orderLabel);
-        add(app.statusLabel);
+        summaryPanel.add(app.nameLabel);
+        summaryPanel.add(app.addressLabel);
+        summaryPanel.add(app.restaurantLabel);
+        summaryPanel.add(app.orderLabel);
+        summaryPanel.add(app.statusLabel);
 
         JButton newOrderButton = new JButton("New Order");
         newOrderButton.addActionListener(_ -> {
@@ -30,6 +50,8 @@ public class OrderSummary extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(newOrderButton);
-        add(buttonPanel);
+        summaryPanel.add(buttonPanel);
+
+        add(summaryPanel, BorderLayout.CENTER);
     }
 }

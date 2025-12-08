@@ -39,7 +39,7 @@ public class LoginPage extends JPanel {
                 app.customerName.setText(UserAccount.name);
                 app.customerAddress.setText(UserAccount.address);
                 JOptionPane.showMessageDialog(app, "Login successful.");
-                app.showPage("Step3");
+                app.refreshPage("Step1");
             } else {
                 JOptionPane.showMessageDialog(app, "Invalid credentials.");
             }
@@ -48,10 +48,14 @@ public class LoginPage extends JPanel {
         JButton goRegister = new JButton("Register");
         goRegister.addActionListener(_ -> app.showPage("Register"));
 
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(_ -> app.showPage("Step1"));
+
         JPanel btnPanel = new JPanel();
         btnPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         btnPanel.add(loginButton);
         btnPanel.add(goRegister);
+        btnPanel.add(backButton);
         add(btnPanel, BorderLayout.SOUTH);
     }
 }

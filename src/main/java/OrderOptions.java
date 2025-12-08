@@ -6,6 +6,34 @@ public class OrderOptions extends JPanel {
     public OrderOptions(OnlineFoodDeliverySystem app) {
         setLayout(new BorderLayout(10,10));
 
+        JPanel topPanel = new JPanel(new BorderLayout());
+        JPanel authPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        if (UserAccount.loggedIn) {
+            JLabel userLabel = new JLabel("Welcome, " + UserAccount.name);
+            userLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+            authPanel.add(userLabel);
+
+            JButton logoutButton = new JButton("Logout");
+            logoutButton.addActionListener(_ -> {
+                UserAccount.loggedIn = false;
+                JOptionPane.showMessageDialog(app, "Logged out successfully.");
+                app.refreshPage("Step1");
+            });
+            authPanel.add(logoutButton);
+        } else {
+            JButton loginButton = new JButton("Login");
+            loginButton.addActionListener(_ -> app.showPage("Login"));
+            authPanel.add(loginButton);
+
+            JButton registerButton = new JButton("Register");
+            registerButton.addActionListener(_ -> app.showPage("Register"));
+            authPanel.add(registerButton);
+        }
+
+        topPanel.add(authPanel, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
+
         JPanel menuPanel = new JPanel(new GridLayout(5,1,10,10));
         menuPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
                 "Select Items to Order", TitledBorder.CENTER, TitledBorder.TOP));
@@ -44,6 +72,7 @@ public class OrderOptions extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         buttonPanel.add(placeOrderButton);
+
         add(buttonPanel, BorderLayout.SOUTH);
     }
 }

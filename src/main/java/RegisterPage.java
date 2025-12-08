@@ -67,9 +67,13 @@ public class RegisterPage extends JPanel {
             app.showPage("Login");
         });
 
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(_ -> app.showPage("Step1"));
+
         JPanel btnPanel = new JPanel();
         btnPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         btnPanel.add(registerBtn);
+        btnPanel.add(backButton);
         add(btnPanel, BorderLayout.SOUTH);
     }
 }

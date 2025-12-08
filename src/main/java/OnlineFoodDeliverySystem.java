@@ -45,6 +45,18 @@ public class OnlineFoodDeliverySystem extends JFrame {
         cardLayout.show(mainPanel, name);
     }
 
+    public void refreshPage(String name) {
+        mainPanel.removeAll();
+        mainPanel.add(new RestaurantOptions(this), "Step1");
+        mainPanel.add(new OrderOptions(this), "Step2");
+        mainPanel.add(new OrderSummary(this), "Step3");
+        mainPanel.add(new LoginPage(this), "Login");
+        mainPanel.add(new RegisterPage(this), "Register");
+        cardLayout.show(mainPanel, name);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+
     public static void main(String[] args) {
         new OnlineFoodDeliverySystem().setVisible(true);
     }
